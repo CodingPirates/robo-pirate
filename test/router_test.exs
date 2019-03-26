@@ -21,15 +21,6 @@ defmodule RoboPirateTest do
     assert resp == "not_found"
   end
 
-  test "Test action not from slack" do
-    %{status: deny, resp_body: resp} =
-      conn(:post, "/action", %{Hello: "world"})
-      |> Router.call(@opts)
-
-    assert resp == "Only slack can issue actions"
-    assert deny == 401
-  end
-
   test "Test invalid signature" do
     %{status: deny, resp_body: resp} =
       conn(:post, "/action", Poison.encode!(%{Hello: "world"}))

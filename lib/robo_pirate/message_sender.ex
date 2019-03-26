@@ -1,4 +1,6 @@
 defmodule RoboPirate.MessageSender do
+  require Logger
+
   @moduledoc """
     All messages sent go through this module.
     Each function should return with either
@@ -22,6 +24,8 @@ defmodule RoboPirate.MessageSender do
   end
 
   def send_message(text, channel) do
+    Logger.info("Sending message in channel #{channel}")
+
     HTTPoison.post(
       @send_url,
       %{"channel" => channel, "text" => text} |> Poison.encode!(),

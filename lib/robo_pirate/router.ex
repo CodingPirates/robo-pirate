@@ -38,9 +38,15 @@ defmodule RoboPirate.Router do
 
   post "/action" do
     if conn |> AuthHelper.from_slack?() do
-      {:ok, payload} = conn.body_params["payload"] |> Poison.decode()
-      Task.async(fn -> ActionHandler.handle_action(payload) end)
-      send_resp(conn, 200, "")
+      case conn.body_params["payload"] |> Poison.decode() do
+        {:ok, payload} ->
+          Task.async(fn -> ActionHandler.handle_action(payload) end)
+          send_resp(conn, 200, "")
+
+        {:error, reason} ->
+          Logger.error("Failed action with reason: #{Poison.encode!(reason)}")
+          send_resp(conn, 200, "")
+      end
     else
       send_resp(conn, 401, "Only slack can issue actions")
     end
