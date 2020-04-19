@@ -40,7 +40,7 @@ defmodule RoboPirate.MixProject do
       {:httpoison, "~> 1.5"},
       {:excoveralls, ">= 0.0.0", only: :test},
       {:faker, ">= 0.0.0", only: :test},
-      {:credo, "~> 1.3.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:junit_formatter, ">= 0.0.0", only: :test}
     ]
   end
